@@ -66,7 +66,7 @@ const CartScreen = () => {
 
   console.log(cartItems);
 
-
+console.log("hellow");
 
   const [selectedOption, setSelectedOption] = useState(0);
 
