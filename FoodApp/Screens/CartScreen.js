@@ -66,27 +66,7 @@ const CartScreen = () => {
 
   console.log(cartItems);
 
-  //   useEffect(() => {
-  //   docRef.onSnapshot((querySnapshot) => {
-  //     const cartData = [];
-  //     querySnapshot.forEach((doc) => {
-  //       const { itemName, price, image, description, quantity, tableNumber } =
-  //         doc.data();
-  //       cartData.push({
-  //         id: doc.id,
-  //         itemName,
-  //         price,
-  //         image,
-  //         description,
-  //         quantity,
-  //         tableNumber,
-  //       });
-  //     });
-  //     setCartData(cartData);
-  //   });
-  // }, []);
-
-  //switch selector
+console.log("hellow");
 
   const [selectedOption, setSelectedOption] = useState(0);
 
