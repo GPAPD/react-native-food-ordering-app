@@ -42,8 +42,8 @@ const Category = () => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Icon name="arrow-back-ios" size={30} />
-        <Text style={{ fontSize: 30, fontWeight: "bold" }}> foods</Text>
+
+
       </View>
 
       {Object.entries(groupedProducts).map(([category, categoryProducts]) => (

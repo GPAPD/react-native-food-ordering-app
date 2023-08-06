@@ -9,6 +9,7 @@ import CartScreen from "./Screens/CartScreen";
 import ItemScreen from "./Screens/ItemScreen";
 import Category from "./Screens/Category";
 import CartItemsContextProvider from "./store/context/cart-context";
+import IntroScreen from "./Screens/IntroScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,6 +19,13 @@ export default function App() {
     <CartItemsContextProvider>
       <NavigationContainer>
         <Stack.Navigator>
+
+        <Stack.Screen
+            options={{ headerShown: false }}
+            name="Intro"
+            component={IntroScreen}
+          />
+
           <Stack.Screen
             options={{ headerShown: false }}
             name="BottomNavigation"

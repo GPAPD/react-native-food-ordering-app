@@ -1,7 +1,8 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+//import { Colors } from "react-native/Libraries/NewAppScreen";
+import { Colors} from "../constants/colors";
 
 const SecondaryButton = ({ title, onPress = () => {} }) => {
   return (
@@ -34,7 +35,7 @@ const PrimaryButton = ({ title, onPress = () => {} }) => {
 const DecrementButton = ({ title, onPress = () => {} }) => {
   return (
     <TouchableOpacity style={style.actionBtn} onPress={onPress}>
-      <Icon name="remove" size={30} color={Colors.white} />
+      <Icon name="remove" size={30} color={"white"} />
     </TouchableOpacity>
   );
 };
@@ -42,10 +43,25 @@ const DecrementButton = ({ title, onPress = () => {} }) => {
 const IncrementButton = ({ title, onPress = () => {} }) => {
   return (
     <TouchableOpacity style={style.actionBtn} onPress={onPress}>
-      <Icon name="add" size={30} color={Colors.white} />
+      <Icon name="add" size={30} color={"white"} />
     </TouchableOpacity>
   );
 };
+
+
+
+const GetStartButton = ({ title, onPress = () => {} }) => {
+  return (
+    <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
+      <View style={{ ...style.primaryButton, backgroundColor: "white",height: 80, borderRadius:35 }}>
+        <Text style={{ ...style.title1, color: '#f07048' }}>{title}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+
+
 
 const style = StyleSheet.create({
   title: { color: "white", fontWeight: "bold", fontSize: 18 },
@@ -79,6 +95,15 @@ const style = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  title1: { color: "white", fontWeight: "bold", fontSize: 30 },
+  btnContainer: {
+    height: 60,
+    marginLeft: 120,
+    marginRight: 120,
+    borderRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 export {
@@ -87,4 +112,5 @@ export {
   DecrementButton,
   PrimaryButton,
   DetailButton,
+  GetStartButton,
 };
