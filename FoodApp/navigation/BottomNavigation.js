@@ -6,11 +6,13 @@ import CartScreen from "../Screens/CartScreen";
 import ItemScreen from "../Screens/ItemScreen";
 import Category from "../Screens/Category";
 import ItemDetailScreen from "../Screens/ItemDetailScreen";
+import { TabActions } from "@react-navigation/native";
 
 const Tab = createBottomTabNavigator();
 
 const BottomNavigation = () => {
   return (
+    
     <Tab.Navigator
       screenOptions={{
         style: {

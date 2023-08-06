@@ -55,7 +55,7 @@ const CardSlider = ({ title, data }) => {
               }}
             >
               <Text
-                style={{ fontSize: 35, fontWeight: "bold", color: "black" }} >
+                style={{ fontSize: 35, fontWeight: "bold", color: "black" ,justifyContent:"center",alignItems:'center' }} >
                 {item.itemName}
               </Text>
 
@@ -68,12 +68,12 @@ const CardSlider = ({ title, data }) => {
                </View>
              
               <Text
-                style={{ fontSize: 28, fontWeight: "bold", color: "black" }} >
+                style={{ fontSize: 30, fontWeight: "bold", color: "black" , justifyContent:"center",alignItems:'center'}} >
                 {'Rs.' + item.price}
               </Text>
 
               <Text
-                style={{ fontSize: 28, fontWeight: "bold", color: "white" }} >
+                style={{ fontSize: 28, fontWeight: "bold", color: "white" , display:'none' }} >
                {item.quantity}
               </Text>
 
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     height: 400,
     width: 400,
     elevation: 25,
-    backgroundColor: Colors.white,
+    backgroundColor: "white",
     alignItems: "center",
     margin:20,
    
