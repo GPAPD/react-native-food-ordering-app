@@ -18,55 +18,28 @@ import { firebase } from "../firebase";
 import CartFlatlist from "../components/CartFlatlist";
 import Colors from "../constants/colors";
 import {CartItemsContext} from '../store/context/cart-context'
-
-
-
+import { useDispatch, useSelector } from "react-redux";
+import { decrementQuantity, incrementQuantity, removeFromCart,} from "../store/redux/CartReducer";
 
 
 
 const CartScreen = () => {
+
   const navigation = useNavigation();
 
-  const cartItemCtx = useContext(CartItemsContext);
-  const cartItems  = cartItemCtx.ids;
+  const cart = useSelector((state) => state.cart.cart);
+  const dispatch = useDispatch();
 
-
-  const [cartData, setCartData] = useState([]);
-  const docRef = firebase.firestore().collection("Products");
-
-  useEffect(() => {
-    const fetchProductsByIds = async () => {
-      const cartData = [];
-      const snapshotPromises = cartItems.map((itemId) => {
-        return docRef.doc(itemId).get();
-      });
+  const cartData = cart.map((item) => ({
+    id: item.id, // Assuming this is the unique identifier of the cart item
+    itemName: item.itemName,
+    price: item.price,
+    image: item.image,
+    description: item.description,
+    quantity: item.quantity,
+    tableNumber: item.tableNumber,
+  }));
   
-      const snapshots = await Promise.all(snapshotPromises);
-  
-      snapshots.forEach((snapshot) => {
-        if (snapshot.exists) {
-          const { itemName, price, image, description, quantity, tableNumber } = snapshot.data();
-          cartData.push({
-            id: snapshot.id,
-            itemName,
-            price,
-            image,
-            description,
-            quantity,
-            tableNumber,
-          });
-        }
-      });
-  
-      setCartData(cartData);
-    };
-  
-    fetchProductsByIds();
-  }, [cartItems]);
-
-  console.log(cartItems);
-
-console.log("Sam");
 
   const [selectedOption, setSelectedOption] = useState(0);
 
@@ -127,23 +100,18 @@ console.log("Sam");
   };
 
   //substract cart item qty
-  const onDecrement = (item, index) => {
-    const nextProducts = [...cartData];
-    if (nextProducts[index].quantity > 1) {
-      nextProducts[index].quantity -= 1;
-      setCartData(nextProducts);
-    }
+  const onDecrement = (cartData) => {
+    dispatch(decrementQuantity(cartData));
   };
 
   //increment cart item qty
-  const onIncrement = (item, index) => {
-    const nextProducts = [...cartData];
-    nextProducts[index].quantity += 1;
-    setCartData(nextProducts);
+  const onIncrement = (cartData) => {
+     dispatch(incrementQuantity(cartData));
   };
 
   let totalQuantity = 0;
   let totalPrice = 0;
+
   cartData.forEach((item) => {
     totalQuantity += item.quantity;
     totalPrice += item.quantity * item.price;
@@ -151,7 +119,8 @@ console.log("Sam");
 
   // remove item from cart
   const onDeleteItem = (cartData) => {
-    cartItemCtx.removeItemFromCart(cartData.id)
+    dispatch(removeFromCart(cartData))
+    
   };
 
 
@@ -195,9 +164,9 @@ console.log("Sam");
             renderItem={({ item, index }) => (
               <CartFlatlist
                 item={item}
-                onIncrement={() => onIncrement(item, index)}
-                onDecrement={() => onDecrement(item, index)}
-                onDeleteItem={() => onDeleteItem(item, index)}
+                onIncrement={() => onIncrement(item)}
+                onDecrement={() => onDecrement(item)}
+                onDeleteItem={() => onDeleteItem(item)}
               />
             )}
             keyExtractor={(item) => item.id}

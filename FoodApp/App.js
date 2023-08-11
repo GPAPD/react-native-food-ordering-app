@@ -10,13 +10,15 @@ import ItemScreen from "./Screens/ItemScreen";
 import Category from "./Screens/Category";
 import CartItemsContextProvider from "./store/context/cart-context";
 import IntroScreen from "./Screens/IntroScreen";
+import { Provider } from "react-redux";
+import store from "./store/store";
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <>
-    <CartItemsContextProvider>
+    <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
 
@@ -60,7 +62,7 @@ export default function App() {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </CartItemsContextProvider>
+    </Provider>
     </>
   );
 }

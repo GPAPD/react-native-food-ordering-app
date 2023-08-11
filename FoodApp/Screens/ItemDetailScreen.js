@@ -16,12 +16,20 @@ import { Colors } from "react-native/Libraries/NewAppScreen";
 import { DetailButton } from "../components/Button";
 import { useNavigation } from "@react-navigation/native";
 import { CartItemsContext } from "../store/context/cart-context";
+import { addToCart } from "../store/redux/CartReducer";
 import { firebase } from "../firebase";
+
+import { useDispatch,useSelector } from "react-redux";
 
 export const SLIDER_WIDTH = Dimensions.get("window").width + 30;
 export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8);
 
+
+
+
+
 const ItemDetailScreen = ({ route }) => {
+
   const navigation = useNavigation();
   const cartItemCtx = useContext(CartItemsContext);
 
@@ -32,27 +40,32 @@ const ItemDetailScreen = ({ route }) => {
   }
 
   const idsLength = cartItemCtx.ids.length;
+  const cart = useSelector((state) => state.cart.cart);
+  console.log(cart);
+
 
   const itemid = data.id;
-  const cartItemChecker = cartItemCtx.ids.includes(itemid);
+  // const cartItemChecker = cartItemCtx.ids.includes(itemid);
 
   //add to cart
-  const addToCart = () => {
-    if (!cartItemChecker) {
-      cartItemCtx.addToCart(itemid);
-    }
-    navigation.navigate("Cart");
-    // const todoRef = firebase.firestore().collection("CartItems");
+  // const addToCart = () => {
+  //   // if (!cartItemChecker) {
+  //   //   cartItemCtx.addToCart(itemid);
+  //   // }
+  //  // addToCart(itemid);
+  //   console.log(cart);
+  // };
 
-    //      todoRef .add(data)
-    //      .then(() => {
 
-    //      alert('Added to cart')
-    //      })
-    //      .catch((error)=>{
-    //      alert(error);
-    //      })
-  };
+  //add to cart
+ const dispatch = useDispatch();
+
+ const addItemToCart = (item) => {
+   dispatch(addToCart(item));
+   navigation.navigate("Cart");
+
+ };
+
 
   // imageSliders
   const imageSlider = [
@@ -161,7 +174,7 @@ const ItemDetailScreen = ({ route }) => {
               <Text style={styles.detailText}>{data.description}</Text>
             </View>
             <View style={{ marginTop: 40, marginBottom: 30 }}>
-              <DetailButton onPress={addToCart} title="Add To Cart" />
+              <DetailButton onPress={()=>addItemToCart(data)} title="Add To Cart" />
             </View>
           </>
         </View>
