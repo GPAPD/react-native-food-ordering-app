@@ -12,7 +12,6 @@ import Carousel, { Pagination } from "react-native-snap-carousel";
 import React, { useState, useRef, useContext } from "react";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import { DetailButton } from "../components/Button";
 import { useNavigation } from "@react-navigation/native";
 import { CartItemsContext } from "../store/context/cart-context";
@@ -20,6 +19,7 @@ import { addToCart } from "../store/redux/CartReducer";
 import { firebase } from "../firebase";
 
 import { useDispatch,useSelector } from "react-redux";
+import Colors from "../constants/colors";
 
 export const SLIDER_WIDTH = Dimensions.get("window").width + 30;
 export const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8);
@@ -41,7 +41,7 @@ const ItemDetailScreen = ({ route }) => {
 
   const idsLength = cartItemCtx.ids.length;
   const cart = useSelector((state) => state.cart.cart);
-  console.log(cart);
+  //console.log(cart);
 
 
   const itemid = data.id;
@@ -155,17 +155,17 @@ const ItemDetailScreen = ({ route }) => {
               }}
             >
               <Text
-                style={{ fontSize: 50, fontWeight: "bold", color: "white" }}
+                style={{ fontSize: 50, fontWeight: "bold", color:Colors.white }}
               >
                 {data.itemName}
               </Text>
               <Text
-                style={{ fontSize: 50, fontWeight: "bold", color: "#f07048" }}
+                style={{ fontSize: 50, fontWeight: "bold", color:Colors.primary1 }}
               >
                 {data.quantity}
               </Text>
               <Text
-                style={{ fontSize: 35, fontWeight: "bold", color: "white" }}
+                style={{ fontSize: 35, fontWeight: "bold", color:Colors.white }}
               >
                 {"Rs. " + data.price}
               </Text>
@@ -192,8 +192,8 @@ const styles = StyleSheet.create({
   details: {
     paddingHorizontal: 20,
     paddingTop: 40,
-    paddingBottom: 60,
-    backgroundColor: "#F07048",
+    paddingBottom: "20%",
+    backgroundColor: Colors.primary1,
     borderTopRightRadius: 40,
     borderTopLeftRadius: 40,
   },
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     lineHeight: 30,
     fontSize: 25,
-    color: "white",
+    color:Colors.white,
   },
 });
 

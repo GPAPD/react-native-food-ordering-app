@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, FlatList ,Image} from "react-native";
 import React from "react";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import Colors from "../constants/colors";
 
 const CardSlider = ({ title, data }) => {
 
@@ -19,7 +19,7 @@ const CardSlider = ({ title, data }) => {
     
     <View >
       
-      <Text style={{ fontSize: 40,fontFamily:'', fontWeight: "bold", color: "black",marginLeft:40,color:'#f07048' }}>
+      <Text style={{ fontSize: 40,fontFamily:'', fontWeight: "bold",marginLeft:40,color:Colors.primary1 }}>
         {title}
       </Text>
       
@@ -33,7 +33,7 @@ const CardSlider = ({ title, data }) => {
            
             <Image
               source={{ uri: item.image }}
-              style={{ width:"95%", height: 200, borderRadius: 10 ,marginTop:10}}
+              style={{ width:"95%", height: 280, borderRadius: 10 ,marginTop:10}}
             />
             <Image
               source={{ uri: item.image1 }}
@@ -49,31 +49,32 @@ const CardSlider = ({ title, data }) => {
                 paddingVertical: 20,
                 flex: 1,
                 justifyContent:'center',
-                margin:5, marginBottom:10
+                margin:5, marginBottom:10,
+                alignItems:"center"
                 
                 
               }}
             >
               <Text
-                style={{ fontSize: 35, fontWeight: "bold", color: "black" ,justifyContent:"center",alignItems:'center' }} >
+                style={{ fontSize: 35, fontWeight: "bold", color: Colors.black ,justifyContent:"center",alignItems:'center' }} >
                 {item.itemName}
               </Text>
 
-               <View style={{height:62}}>
+               {/* <View style={{height:62}}>
 
                <Text style={{ fontSize: 25, fontWeight: "bold", color: "grey" }}>
                 {item.description}
               </Text>
 
-               </View>
+               </View> */}
              
               <Text
-                style={{ fontSize: 30, fontWeight: "bold", color: "black" , justifyContent:"center",alignItems:'center'}} >
+                style={{ fontSize: 30, fontWeight: "bold", color: Colors.black, justifyContent:"center",alignItems:'center'}} >
                 {'Rs.' + item.price}
               </Text>
 
               <Text
-                style={{ fontSize: 28, fontWeight: "bold", color: "white" , display:'none' }} >
+                style={{ fontSize: 28, fontWeight: "bold", color: Colors.white , display:'none' }} >
                {item.quantity}
               </Text>
 
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
     height: 400,
     width: 400,
     elevation: 25,
-    backgroundColor: "white",
+    backgroundColor: Colors.white,
     alignItems: "center",
     margin:20,
    

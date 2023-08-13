@@ -3,6 +3,8 @@ import {Picker} from '@react-native-picker/picker';
 import React, { useState }  from 'react'
 import { firebase } from "../firebase";
 import { SecondaryButton } from "../components/Button";
+import Colors from "../constants/colors";
+
 
 const ItemScreen = () => {
  
@@ -65,7 +67,7 @@ const ItemScreen = () => {
       <TextInput
         style={styles.TextInput}
         placeholder="Item Name"
-        placeholderTextColor="#003f5c"
+        placeholderTextColor={Colors.grey}
         value={itemName}
         onChangeText={(itemName) => setItemName(itemName)} 
         />
@@ -75,21 +77,21 @@ const ItemScreen = () => {
         <TextInput
         style={styles.TextInput}
         placeholder=" Item Image1 Url"
-        placeholderTextColor="#003f5c"
+        placeholderTextColor={Colors.grey}
         value={image}
         onChangeText={(image) => setImage(image)} 
         />
          <TextInput
         style={styles.TextInput}
         placeholder="Item Image2 Url"
-        placeholderTextColor="#003f5c"
+        placeholderTextColor={Colors.grey}
         value={image1}
         onChangeText={(image1) => setImage1(image1)} 
         />
          <TextInput
         style={styles.TextInput}
         placeholder="Item Image3 Url"
-        placeholderTextColor="#003f5c"
+        placeholderTextColor={Colors.grey}
         value={image2}
         onChangeText={(image2) => setImage2(image2)} 
         />
@@ -99,14 +101,14 @@ const ItemScreen = () => {
           style={styles.TextInput}
           placeholder="Price."
           value={price}
-          placeholderTextColor="#003f5c"
+          placeholderTextColor={Colors.grey}
           onChangeText={(text) => setPrice(text)} 
           />
           <TextInput
           style={styles.TextInput}
           placeholder="Description"
           value={description}
-          placeholderTextColor="#003f5c"
+          placeholderTextColor={Colors.grey}
           onChangeText={(text) => setDescription(text)} 
           />
           
@@ -120,6 +122,7 @@ const ItemScreen = () => {
               <Picker.Item style={{fontSize:22}} label="SriLankan" value="SriLankan" />
               <Picker.Item style={{fontSize:22}} label="Indian" value="Indian" />
               <Picker.Item style={{fontSize:22}} label="Chinese" value="Chinese" />
+              <Picker.Item style={{fontSize:22}} label="Italian" value="Italian" />
               {/* Add more Picker.Item components as needed */}
           </Picker>
           

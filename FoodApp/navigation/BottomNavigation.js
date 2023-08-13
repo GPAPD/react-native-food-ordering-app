@@ -37,7 +37,7 @@ const BottomNavigation = () => {
         }}
       />
 
-      {/* <Tab.Screen
+      <Tab.Screen
         name="AddItem"
         component={ItemScreen}
         options={{
@@ -47,7 +47,7 @@ const BottomNavigation = () => {
             <Icon name="add" color={color} size={50} marginLeft={-20} />
           ),
         }}
-      /> */}
+      />
 
       <Tab.Screen
         name="Cart"
