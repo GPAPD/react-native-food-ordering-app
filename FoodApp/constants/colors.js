@@ -8,7 +8,7 @@ const Colors = {
     red:"#750000",
     grey:"#003f5c",
     closebox:"#c3b9b9",
-
+    gold: '#FFD700',
 }
 
 export default Colors;
