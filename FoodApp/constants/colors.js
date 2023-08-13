@@ -5,6 +5,7 @@ const Colors = {
     black:'#000000',
     white:'#fffff',
     primary3:'#696969',
+    gold: '#FFD700',
 
 }
 
