@@ -27,7 +27,10 @@ import * as Yup from "yup";
 
 const CartScreen = () => {
 
+  
+
   const navigation = useNavigation();
+  
 
   const cart = useSelector((state) => state.cart.cart);
   const dispatch = useDispatch();
@@ -61,10 +64,10 @@ const CartScreen = () => {
   //popup  popup dialog with textfield
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [inputTableNumber, setInputTableNumber] = useState("");
-  const [savedTableNumber, setSavedTableNumber] = useState("");
+  const [savedTableNumber, setSavedTableNumber] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isEmptyError, setIsEmptyError] = useState(false);
-  var tableId; 
+  
   const toggleModal = () => {
     setIsModalVisible(!isModalVisible);
    // setIsEmptyError(false);
@@ -72,17 +75,21 @@ const CartScreen = () => {
 
 
   const validationSchema = Yup.object().shape({
-    inputTableNumber: Yup.string().required("Table Number is required"),
+    inputTableNumber: Yup.string()
+    .matches(/^\d{2}$/, "Invalid Value ! Please Check the Table Number In Your Table.ex:01 ")
+    .required("Table Number is required"),
  
   });
 
 
   const handleSaveTableNumber = () => {
-    // Perform actions with the text value
-    setSavedTableNumber(inputTableNumber);
-   // setInputTableNumber("")
+
+    
+    setSavedTableNumber(true);
     toggleModal();
   };
+
+
 
   // const handleInputChange = (inputTableNumber) => {
   //   setInputTableNumber(inputTableNumber);
@@ -104,7 +111,7 @@ const CartScreen = () => {
   // };
 
   const checkout = () => {
-    if (inputTableNumber === null && selectedOption === 1) {
+    if (inputTableNumber === "" && selectedOption === 1) {
       toggleModal();
     } else {
       const checkoutData = {
@@ -116,8 +123,9 @@ const CartScreen = () => {
           price: item.price,
 
         })),
+        
         orderingMethod: selectedOption === 0 ? "Take-Away" : "Dine-In",
-        tableNumber: savedTableNumber,
+        tableNumber: inputTableNumber,
         totalPrice:totalPrice,
         
 
@@ -232,7 +240,7 @@ const CartScreen = () => {
                     if (value === 1) {
                       toggleModal();
                     } else {
-                      setInputTableNumber(null);
+                      setInputTableNumber("");
                     }
                       setSelectedOption(value);
                   }}
@@ -326,12 +334,13 @@ const CartScreen = () => {
                           {errors.inputTableNumber}
                         </Text>
                       ) : null}
-                      
+                      <View style={{width:250}}>
                       <PrimaryButton
                         title="Save"
                         onPress={handleSubmit}
                         disabled={isSubmitting}
                       />
+                      </View>
                     </>
                   )}
                 </Formik>
@@ -340,7 +349,7 @@ const CartScreen = () => {
           </Modal>
                 </View>
 
-                {inputTableNumber !=null ? (
+                {selectedOption === 1 && savedTableNumber  ? (
                   <Text
                     style={{
                       textAlign: "center",
@@ -350,7 +359,8 @@ const CartScreen = () => {
                       color:Colors.white,
                     }}
                   >
-                    {"Your Table Number is : " + inputTableNumber}
+                    Your TableNumber Is :
+                    {inputTableNumber}
                   </Text>
                 ) : (
                   <Text></Text>
@@ -393,6 +403,7 @@ const CartScreen = () => {
                 <View style={{ marginHorizontal: 10, marginTop: 20 }}>
                   <SecondaryButton onPress={checkout} title="CHECKOUT" />
                 </View>
+                
               </View>
             )}
           />

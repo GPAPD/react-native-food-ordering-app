@@ -7,6 +7,8 @@ import CardSlider from "../components/CardSlider";
 
 const Category = () => {
   const [products, setProducts] = useState([]);
+  
+
 
   useEffect(() => {
     const foodRef = firebase.firestore().collection('Products');
@@ -38,7 +40,7 @@ const Category = () => {
   };
 
   const groupedProducts = groupProductsByCategory();
-
+  const sortedCategories = Object.keys(groupedProducts).sort();
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -46,11 +48,11 @@ const Category = () => {
 
       </View>
 
-      {Object.entries(groupedProducts).map(([category, categoryProducts]) => (
+      {sortedCategories.map((category) => (
         <CardSlider
           key={category}
           title={category}
-          data={categoryProducts}
+          data={groupedProducts[category]}
         />
       ))}
     </ScrollView>

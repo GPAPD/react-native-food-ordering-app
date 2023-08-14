@@ -49,12 +49,21 @@ const IncrementButton = ({ title, onPress = () => {} }) => {
   );
 };
 
+const CancelButton = ({ title, onPress = () => {} }) => {
+  return (
+    <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
+      <View style={{ ...style.CancelButton, backgroundColor: Colors.primary3}}>
+        <Text style={{ ...style.title, color: Colors.white }}>{title}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 
 const GetStartButton = ({ title, onPress = () => {} }) => {
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
-      <View style={{ ...style.primaryButton, backgroundColor: Colors.white,height: 80, borderRadius:35 }}>
+      <View style={{ ...style.primaryButton, backgroundColor: Colors.white,height: 75, borderRadius:40,width:380 }}>
         <Text style={{ ...style.title1, color: Colors.primary1 }}>{title}</Text>
       </View>
     </TouchableOpacity>
@@ -88,10 +97,10 @@ const style = StyleSheet.create({
 
   primaryButton: {
     backgroundColor: Colors.primary1,
-    width: 250,
+    width: "auto",
     height: 60,
-    padding: 15,
-    borderRadius: 10,
+    padding: 16,
+    borderRadius: 30,
     margin: 20,
     justifyContent: "center",
     alignItems: "center",
@@ -105,6 +114,16 @@ const style = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  CancelButton:{
+    backgroundColor: Colors.primary3,
+    width:150,
+    height: 60,
+    padding: 15,
+    borderRadius: 30,
+    margin: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 export {
@@ -114,4 +133,5 @@ export {
   PrimaryButton,
   DetailButton,
   GetStartButton,
+  CancelButton,
 };

@@ -17,18 +17,20 @@ const CustomConfirmModal = ({ isVisible, onClose, onConfirm,message,title,Confir
             {message}
           </Text>
           <View style={styles.confirmModalButtons}>
+
+          <TouchableOpacity
+              style={[styles.confirmModalButton, styles.confirmButton]}
+              onPress={onConfirm}
+            >
+              <Text style={styles.confirmModalButtonText}>{ConfirmText}</Text>
+            </TouchableOpacity>
             <TouchableOpacity
               style={[styles.confirmModalButton, styles.cancelButton]}
               onPress={onClose}
             >
               <Text style={styles.confirmModalButtonText}>{CancelText}</Text>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.confirmModalButton, styles.confirmButton]}
-              onPress={onConfirm}
-            >
-              <Text style={styles.confirmModalButtonText}>{ConfirmText}</Text>
-            </TouchableOpacity>
+           
           </View>
         </View>
       </View>

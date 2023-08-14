@@ -7,8 +7,8 @@ const Colors = {
     primary3:'#696969',
     red:"#750000",
     grey:"#003f5c",
-    closebox:"#c3b9b9",
-    gold: '#FFD700',
+    grey2:"#c3b9b9",
+    gold: '#DE970B',
 }
 
 export default Colors;

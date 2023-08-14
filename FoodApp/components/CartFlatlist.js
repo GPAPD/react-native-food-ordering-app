@@ -84,7 +84,7 @@ const CartFlatlist = ({ item, onIncrement, onDecrement, onDeleteItem }) => {
           onPress={onDeleteItem}
           style={{ marginTop: -35, marginBottom: 145, marginRight: -35 }}
         >
-          <Icon name="close-box" color={Colors.closebox} size={40} />
+          <Icon name="close-box" color={Colors.grey2} size={40} />
         </TouchableOpacity>
       </View>
     </View>

@@ -5,11 +5,14 @@ import React from "react";
 import CartScreen from "../Screens/CartScreen";
 import ItemScreen from "../Screens/ItemScreen";
 import Category from "../Screens/Category";
+import ReviewScreen from "../Screens/ReviewScreen"
 import ItemDetailScreen from "../Screens/ItemDetailScreen";
 import { TabActions } from "@react-navigation/native";
+import OrderStatusScreen from "../Screens/OrderStatusScreen";
+import IntroScreen from "../Screens/IntroScreen";
 
 const Tab = createBottomTabNavigator();
-
+const shouldShowOrderStatusScreen = false;
 const BottomNavigation = () => {
   return (
     
@@ -36,15 +39,16 @@ const BottomNavigation = () => {
           ),
         }}
       />
+      
 
       <Tab.Screen
-        name="AddItem"
-        component={ItemScreen}
+        name="Review"
+        component={ReviewScreen}
         options={{
           headerShown: false,
           tabBarIcon: ({ color }) => (
             //
-            <Icon name="add" color={color} size={50} marginLeft={-20} />
+            <Icon name="rate-review" color={color} size={50} marginLeft={-20} />
           ),
         }}
       />
@@ -65,6 +69,22 @@ const BottomNavigation = () => {
           ),
         }}
       />
+
+{/* 
+        <Tab.Screen
+          name="OrderStatus"
+          component={OrderStatusScreen}
+          options={{
+            headerShown: false,
+            tabBarIcon: ({ color }) => (
+              <Icon name="home-filled" color={color} size={50} marginLeft={-20} />
+            ),
+            tabBarVisibility: false, // Hide the tab bar icon and label
+          }}
+        /> */}
+
+
+      
     </Tab.Navigator>
   );
 };

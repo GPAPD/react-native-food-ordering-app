@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View,Text,Modal,TextInput,Button,StyleSheet,TouchableOpacity,Alert,Image,ScrollView,} from "react-native";
 import { useRoute } from "@react-navigation/native";
-import { PrimaryButton, SecondaryButton } from "../components/Button";
+import { CancelButton, PrimaryButton, SecondaryButton } from "../components/Button";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { firebase } from "../firebase";
 import { useNavigation } from "@react-navigation/native";
@@ -48,15 +48,7 @@ const OrderConfirmationScreen = () => {
 
   //save method
   const saveCustomerDetails = () => {
-    if (
-      customerName.trim() === "" ||
-      customerPhone.trim() === "" ||
-      customerEmail.trim() === ""
-    ) {
-      
-      return;
-    }
-
+ 
     setIsCustomerSaved(true);
     toggleModal();
   };
@@ -82,21 +74,22 @@ const OrderConfirmationScreen = () => {
         name: customerName,
         phone: customerPhone,
         email: customerEmail,
+
       },
+      orderStatus:"Pending",
+      
     };
 
     try {
     
       const orderRef = await firebase.firestore().collection("Orders").add(order);
 
-      // Get the orderId from the document reference
+     
       const orderId = orderRef.id;
-  
-      // Clear the cart and navigate to OrderStatusScreen with orderId
       dispatch(clearCart());
       setIsSubmitting(false);
-      alert("Order placed successfully");
-      navigation.navigate("OrderStatusScreen", { orderId });
+      //alert("Order placed successfully");
+      navigation.navigate("OrderStatusScreen", { orderId, customerName });
 
                
       // Alert.alert(
@@ -196,7 +189,7 @@ const OrderConfirmationScreen = () => {
             <Text style={styles.orderingMethodText}>
               Ordering Method: {checkoutData.orderingMethod}
             </Text>
-            {checkoutData.tableNumber !== null && (
+            {checkoutData.tableNumber !== "" && (
               <Text style={styles.orderingMethodText}>
                 Table Number: {checkoutData.tableNumber}
               </Text>
@@ -230,14 +223,16 @@ const OrderConfirmationScreen = () => {
               </View>
             ) : (
               // Enter Customer Details
+              
               <View style={styles.enterDetailsButton}>
-         
+               <View style={{width:400}}>
                 <PrimaryButton
                 title="Enter Customer Details"
                 onPress={toggleModal}
                 disabled={isSubmitting}/>
+               </View>
 
-                <PrimaryButton
+                <CancelButton
                 title="Cancel"
                 onPress={()=> navigation.navigate("Cart")}
                 />
@@ -249,15 +244,16 @@ const OrderConfirmationScreen = () => {
           <View style={styles.confirmButtonContainer}>
             {isCustomerSaved && (
               <View style={styles.enterDetailsButton}>
+                 <View style={{width:400}}>
                  <PrimaryButton
                 title="Confirm Order"
                 onPress={confirmModal}
                 disabled={isSubmitting}
               />
-
-                <PrimaryButton
+             </View>
+                <CancelButton
                 title="Cancel"
-                onPress={()=> navigation.navigate("Cart")}
+                onPress={cancelOrder}
                 />
              
               </View>
@@ -344,11 +340,14 @@ const OrderConfirmationScreen = () => {
                           {errors.customerEmail}
                         </Text>
                       ) : null}
+
+                     <View style={{width:250}}>
                       <PrimaryButton
                         title="Save"
                         onPress={handleSubmit}
                         disabled={isSubmitting}
                       />
+                      </View>
                     </>
                   )}
                 </Formik>
@@ -454,9 +453,11 @@ const styles = StyleSheet.create({
   enterDetailsButton: {
     //margin: 70,
     flexDirection:"row",
+    marginTop:50,
     justifyContent:"center",
-    marginTop:50
+  
   },
+  
 
   modalBackground: {
     flex: 1,
