@@ -1,7 +1,22 @@
 import React, { useState } from "react";
-import { View,Text,Modal,TextInput,Button,StyleSheet,TouchableOpacity,Alert,Image,ScrollView,} from "react-native";
+import {
+  View,
+  Text,
+  Modal,
+  TextInput,
+  Button,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  Image,
+  ScrollView,
+} from "react-native";
 import { useRoute } from "@react-navigation/native";
-import { CancelButton, PrimaryButton, SecondaryButton } from "../components/Button";
+import {
+  CancelButton,
+  PrimaryButton,
+  SecondaryButton,
+} from "../components/Button";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { firebase } from "../firebase";
 import { useNavigation } from "@react-navigation/native";
@@ -11,6 +26,7 @@ import Colors from "../constants/colors";
 import CustomConfirmModal from "../components/CustomConfirmModal";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import "firebase/compat/database"; 
 
 const OrderConfirmationScreen = () => {
   const navigation = useNavigation();
@@ -33,7 +49,6 @@ const OrderConfirmationScreen = () => {
     setIsModalVisible(!isModalVisible);
   };
 
-
   //validations for customer details form
   const validationSchema = Yup.object().shape({
     customerName: Yup.string().required("Customer Name is required"),
@@ -45,14 +60,11 @@ const OrderConfirmationScreen = () => {
       .required("Customer Email is required"),
   });
 
-
   //save method
   const saveCustomerDetails = () => {
- 
     setIsCustomerSaved(true);
     toggleModal();
   };
-
 
   // order submit method
 
@@ -74,24 +86,26 @@ const OrderConfirmationScreen = () => {
         name: customerName,
         phone: customerPhone,
         email: customerEmail,
-
       },
-      orderStatus:"Pending",
-      
+      orderStatus: "Pending",
     };
 
     try {
-    
-      const orderRef = await firebase.firestore().collection("Orders").add(order);
+      const orderRef = await firebase
+        .firestore()
+        .collection("Orders")
+        .add(order);
 
-     
+      // Insert into Realtime Database
+      const realtimeDatabase = firebase.database();
+      await realtimeDatabase.ref("Orders/" + orderRef.id).set(order);
+
       const orderId = orderRef.id;
       dispatch(clearCart());
       setIsSubmitting(false);
       //alert("Order placed successfully");
       navigation.navigate("OrderStatusScreen", { orderId, customerName });
 
-               
       // Alert.alert(
       //   "Confirm Order",
       //   "Are you sure you want to place this order?",
@@ -117,7 +131,6 @@ const OrderConfirmationScreen = () => {
       //     },
       //   ]
       // );
-     
     } catch (error) {
       setIsSubmitting(false);
       console.error("Error displaying confirmation dialog:", error);
@@ -128,18 +141,15 @@ const OrderConfirmationScreen = () => {
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.orderSummary}>
-
-              
-
-         <CustomConfirmModal
-         isVisible={isOrderCancelModal}
-         title="Cancel Order"
-         ConfirmText="Yes"
-         CancelText="No"
-         message="Are you sure you want to cancel this order?"
-         onClose={() => setIsOrderCancelModal(false)}
-         onConfirm={()=> navigation.navigate("Cart")}
-        />
+          <CustomConfirmModal
+            isVisible={isOrderCancelModal}
+            title="Cancel Order"
+            ConfirmText="Yes"
+            CancelText="No"
+            message="Are you sure you want to cancel this order?"
+            onClose={() => setIsOrderCancelModal(false)}
+            onConfirm={() => navigation.navigate("Cart")}
+          />
           <Text style={styles.orderSummaryText}>Order Summary</Text>
 
           {checkoutData.items.map((item, index) => (
@@ -195,7 +205,7 @@ const OrderConfirmationScreen = () => {
               </Text>
             )}
           </View>
-        
+
           <View style={styles.customerContainer}>
             {isCustomerSaved ? (
               // Display Customer Details
@@ -207,14 +217,21 @@ const OrderConfirmationScreen = () => {
                     onPress={toggleModal}
                     disabled={isSubmitting}
                   >
-                    
                     <Icon
                       name="square-edit-outline"
                       color={Colors.black}
                       size={32}
                       fontWeight={"bold"}
                     />
-                    <Text style={{color:Colors.primary1,fontSize:25,fontWeight:"500"}}>Edit</Text>
+                    <Text
+                      style={{
+                        color: Colors.primary1,
+                        fontSize: 25,
+                        fontWeight: "500",
+                      }}
+                    >
+                      Edit
+                    </Text>
                   </TouchableOpacity>
                 </View>
                 <Text style={styles.savedDetail}>Name: {customerName}</Text>
@@ -223,57 +240,54 @@ const OrderConfirmationScreen = () => {
               </View>
             ) : (
               // Enter Customer Details
-              
+
               <View style={styles.enterDetailsButton}>
-               <View style={{width:400}}>
-                <PrimaryButton
-                title="Enter Customer Details"
-                onPress={toggleModal}
-                disabled={isSubmitting}/>
-               </View>
+                <View style={{ width: 400 }}>
+                  <PrimaryButton
+                    title="Enter Customer Details"
+                    onPress={toggleModal}
+                    disabled={isSubmitting}
+                  />
+                </View>
 
                 <CancelButton
-                title="Cancel"
-                onPress={()=> navigation.navigate("Cart")}
+                  title="Cancel"
+                  onPress={() => navigation.navigate("Cart")}
                 />
               </View>
-          
             )}
           </View>
 
           <View style={styles.confirmButtonContainer}>
             {isCustomerSaved && (
               <View style={styles.enterDetailsButton}>
-                 <View style={{width:400}}>
-                 <PrimaryButton
-                title="Confirm Order"
-                onPress={confirmModal}
-                disabled={isSubmitting}
-              />
-             </View>
-                <CancelButton
-                title="Cancel"
-                onPress={cancelOrder}
-                />
-             
+                <View style={{ width: 400 }}>
+                  <PrimaryButton
+                    title="Confirm Order"
+                    onPress={confirmModal}
+                    disabled={isSubmitting}
+                  />
+                </View>
+                <CancelButton title="Cancel" onPress={cancelOrder} />
               </View>
-             
-              
             )}
             <CustomConfirmModal
-         isVisible={isOrderConfirmModal}
-         title="Confirm Order"
-         ConfirmText="Confirm"
-         CancelText="Cancel"
-         message="Are you sure you want to place this order?"
-         onClose={() => setIsOrderConfirmModal(false)}
-         onConfirm={submitOrder}
-        />
+              isVisible={isOrderConfirmModal}
+              title="Confirm Order"
+              ConfirmText="Confirm"
+              CancelText="Cancel"
+              message="Are you sure you want to place this order?"
+              onClose={() => setIsOrderConfirmModal(false)}
+              onConfirm={submitOrder}
+            />
           </View>
-          
 
           {/* Modal for Customer Details */}
-          <Modal visible={isModalVisible} animationType="slide" transparent={true}>
+          <Modal
+            visible={isModalVisible}
+            animationType="slide"
+            transparent={true}
+          >
             <View style={styles.modalBackground}>
               <View style={styles.modalContainer}>
                 <TouchableOpacity
@@ -341,12 +355,12 @@ const OrderConfirmationScreen = () => {
                         </Text>
                       ) : null}
 
-                     <View style={{width:250}}>
-                      <PrimaryButton
-                        title="Save"
-                        onPress={handleSubmit}
-                        disabled={isSubmitting}
-                      />
+                      <View style={{ width: 250 }}>
+                        <PrimaryButton
+                          title="Save"
+                          onPress={handleSubmit}
+                          disabled={isSubmitting}
+                        />
                       </View>
                     </>
                   )}
@@ -444,7 +458,7 @@ const styles = StyleSheet.create({
     padding: 5,
     borderRadius: 4,
     marginRight: 20,
-    flexDirection:"row"
+    flexDirection: "row",
   },
   changeButtonText: {
     color: Colors.white,
@@ -452,12 +466,10 @@ const styles = StyleSheet.create({
   },
   enterDetailsButton: {
     //margin: 70,
-    flexDirection:"row",
-    marginTop:50,
-    justifyContent:"center",
-  
+    flexDirection: "row",
+    marginTop: 50,
+    justifyContent: "center",
   },
-  
 
   modalBackground: {
     flex: 1,
@@ -470,7 +482,7 @@ const styles = StyleSheet.create({
   modalContainer: {
     padding: 16,
     backgroundColor: Colors.white,
-    width: "80%", 
+    width: "80%",
     elevation: 10,
     justifyContent: "center",
     alignItems: "center",
@@ -480,12 +492,12 @@ const styles = StyleSheet.create({
     color: "red",
     fontSize: 22,
     marginBottom: 20,
-    marginLeft:20,
-    alignSelf:"flex-start"
+    marginLeft: 20,
+    alignSelf: "flex-start",
   },
   closeButton: {
-   alignSelf:"flex-end",
-   top:-12,
+    alignSelf: "flex-end",
+    top: -12,
   },
   input: {
     borderWidth: 1,

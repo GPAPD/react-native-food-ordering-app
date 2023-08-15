@@ -10,6 +10,8 @@ import ItemDetailScreen from "../Screens/ItemDetailScreen";
 import { TabActions } from "@react-navigation/native";
 import OrderStatusScreen from "../Screens/OrderStatusScreen";
 import IntroScreen from "../Screens/IntroScreen";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+
 
 const Tab = createBottomTabNavigator();
 const shouldShowOrderStatusScreen = false;
@@ -48,7 +50,8 @@ const BottomNavigation = () => {
           headerShown: false,
           tabBarIcon: ({ color }) => (
             //
-            <Icon name="rate-review" color={color} size={50} marginLeft={-20} />
+            <Icon name="star" color={color} size={50} marginLeft={-20} />
+            
           ),
         }}
       />

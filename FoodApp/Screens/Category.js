@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView, Text } from 'react-native';
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { firebase } from "../firebase";
 import CardSlider from "../components/CardSlider";
+import Colors from '../constants/colors';
 
 const Category = () => {
   const [products, setProducts] = useState([]);
@@ -45,7 +45,9 @@ const Category = () => {
     <ScrollView style={styles.container}>
       <View style={styles.header}>
 
-
+      {/* <Text style={styles.headerText1}>Welcome !</Text>
+      <Text style={styles.headerText2}> To Laluna Restaurant</Text> */}
+    
       </View>
 
       {sortedCategories.map((category) => (
@@ -62,9 +64,21 @@ const Category = () => {
 const styles = StyleSheet.create({
   header: {
     paddingVertical: 20,
-    flexDirection: "row",
-    alignItems: "center",
-    marginHorizontal: 20,
+    flexDirection:"column",
+    backgroundColor:Colors.white,
+    elevation:20
+   
+  },
+  headerText1: {
+    fontSize: 40,
+    fontWeight: "bold",
+    marginHorizontal:30,
+  },
+  headerText2: {
+    fontSize: 30,
+    fontWeight: "bold",
+    color:Colors.primary3,
+      marginHorizontal:30,
   },
   container: {
     flex: 1,

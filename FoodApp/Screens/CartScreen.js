@@ -146,6 +146,8 @@ const CartScreen = () => {
      dispatch(incrementQuantity(cartData));
   };
 
+
+  
   let totalQuantity = 0;
   let totalPrice = 0;
 

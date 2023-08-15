@@ -22,12 +22,24 @@ export const cartSlice = createSlice({
       );
       state.cart = removeFromCart;
     },
+    // incrementQuantity: (state, action) => {
+    //   const itemInCart = state.cart.find(
+    //     (item) => item.id == action.payload.id
+    //   );
+    //   itemInCart.quantity++;
+    // },
+
     incrementQuantity: (state, action) => {
       const itemInCart = state.cart.find(
         (item) => item.id == action.payload.id
       );
-      itemInCart.quantity++;
+      if (itemInCart.quantity < 10) {
+        itemInCart.quantity++;
+      } else {
+       // console.log("Maximum quantity reached:", itemInCart.quantity);
+      }
     },
+    
     decrementQuantity: (state, action) => {
       const itemInCart = state.cart.find(
         (item) => item.id == action.payload.id

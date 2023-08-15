@@ -28,21 +28,30 @@ const CardSlider = ({ title, data }) => {
         horizontal
         data={data}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.Card}  key={item.index} onPress={()=> {openDetailPage(item)}
-          }  >
-           
+          <TouchableOpacity
+            style={[
+              styles.Card,
+              // { opacity: item.IsLive === 1 ? 0.5 : 1 }, // Set opacity based on IsLive value
+            ]}
+            key={item.index}
+            onPress={() => { openDetailPage(item);
+              // if (item.IsLive !== 1) {
+              //   openDetailPage(item);
+              // }
+            }}
+          >
+            {item.IsLive === 1 && (
+              <View style={styles.outOfStockContainer}>
+                <Text style={styles.outOfStockText}>Out of Stock</Text>
+              </View>
+            )}
+
             <Image
               source={{ uri: item.image }}
-              style={{ width:"95%", height: 280, borderRadius: 10 ,marginTop:10}}
+              style={{ width: "95%", height: 280, borderRadius: 10, marginTop: 10 ,opacity: item.IsLive === 1 ? 0.5 : 1 }}
             />
-            <Image
-              source={{ uri: item.image1 }}
-             
-            />
-            <Image
-              source={{ uri: item.image2 }}
-              
-            />
+            <Image source={{ uri: item.image1 }} />
+            <Image source={{ uri: item.image2 }} />
             <View
               style={{
                 height: 200,
@@ -59,6 +68,7 @@ const CardSlider = ({ title, data }) => {
                 style={{ fontSize: 35, fontWeight: "bold", color: Colors.black ,justifyContent:"center",alignItems:'center' }} >
                 {item.itemName}
               </Text>
+           
 
                {/* <View style={{height:62}}>
 
@@ -109,6 +119,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     margin:20,
    
+  },
+  outOfStockContainer: {
+    ...StyleSheet.absoluteFill,
+    alignItems:"center",
+   // backgroundColor: "rgba(0, 0, 0, 0.3)",
+    borderRadius: 10,
+  },
+  outOfStockText: {
+    fontSize: 50,
+    fontWeight: "bold",
+    color: Colors.primary3,
+    top:100
+
   },
  
 });
