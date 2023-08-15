@@ -40,7 +40,7 @@ const CardSlider = ({ title, data }) => {
               // }
             }}
           >
-            {item.IsLive === 1 && (
+            {item.IsLive == 0 && (
               <View style={styles.outOfStockContainer}>
                 <Text style={styles.outOfStockText}>Out of Stock</Text>
               </View>
@@ -48,7 +48,7 @@ const CardSlider = ({ title, data }) => {
 
             <Image
               source={{ uri: item.image }}
-              style={{ width: "95%", height: 280, borderRadius: 10, marginTop: 10 ,opacity: item.IsLive === 1 ? 0.5 : 1 }}
+              style={{ width: "95%", height: 280, borderRadius: 10, marginTop: 10 ,opacity: item.IsLive == 0 ? 0.5 : 1 }}
             />
             <Image source={{ uri: item.image1 }} />
             <Image source={{ uri: item.image2 }} />
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   outOfStockText: {
     fontSize: 50,
     fontWeight: "bold",
-    color: Colors.primary3,
+    color:'red',
     top:100
 
   },
