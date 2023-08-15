@@ -18,7 +18,7 @@ const DetailButton = ({ title, onPress = () => {} }) => {
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
       <View style={{ ...style.btnContainer, backgroundColor:Colors.white }}>
-        <Text style={{ ...style.title, color:Colors.black}}>{title}</Text>
+        <Text style={{ ...style.title, color:Colors.primary1}}>{title}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -70,6 +70,17 @@ const GetStartButton = ({ title, onPress = () => {} }) => {
   );
 };
 
+
+const OutOfStcokButton = ({ title, onPress = () => {} }) => {
+  return (
+    <TouchableOpacity activeOpacity={0.8} //onPress={onPress}
+    >
+      <View style={{ ...style.btnContainer, backgroundColor:Colors.white}}>
+        <Text style={{ ...style.title, color:Colors.grey2}}>{title}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 
 
@@ -134,4 +145,5 @@ export {
   DetailButton,
   GetStartButton,
   CancelButton,
+  OutOfStcokButton,
 };

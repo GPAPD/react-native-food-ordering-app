@@ -113,7 +113,7 @@ function ReviewScreen() {
       createdAt: currentDate,
     };
 
-    if (currentValue !== "" && cEmail !== "" && textArea !== "") {
+    if (currentValue != 0 && cEmail !== "" && textArea !== "") {
       reviews.add(data).then(() => {
         setCurrentValue(0), setTextArea(""), setCemail("");
       });
