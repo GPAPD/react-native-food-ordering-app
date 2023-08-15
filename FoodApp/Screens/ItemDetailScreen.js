@@ -177,7 +177,7 @@ const ItemDetailScreen = ({ route }) => {
               <Text style={styles.detailText}>{data.description}</Text>
             </View>
             <View style={{ marginTop: 40, marginBottom: 30 }}>
-              {data.IsLive == 1 ? (
+              {data.IsLive == 0 ? (
                 <OutOfStcokButton
                   onPress={() => addItemToCart(data)}
                   title="Stock Out"
