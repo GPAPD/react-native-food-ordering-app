@@ -6,12 +6,16 @@ import { useNavigation } from "@react-navigation/native";
 import { CommonActions } from "@react-navigation/native";
 import { PrimaryButton } from "../components/Button";
 import { useRoute } from "@react-navigation/native";
+import ReviewModal from "../components/ReviewModal";
+import { firebase } from "../firebase";
+import "firebase/firestore";
+
 
 const OrderStatusScreen = () => {
   const route = useRoute();
   const navigation = useNavigation();
 
-  const { orderId, customerName } = route.params;
+  const { orderId, customerName,customerEmail } = route.params;
   // const handleRestart = () => {
   //   const resetAction = CommonActions.reset({
   //     index: 0, // index of the screen to navigate to
@@ -20,8 +24,22 @@ const OrderStatusScreen = () => {
 
   //   navigation.dispatch(resetAction);
   // };
+  const [showModal, setShowModal] = useState(false);
 
-  const [timeLeft, setTimeLeft] = useState(20); // Initial time in seconds
+
+  useEffect(() => {
+    const modalTimer = setTimeout(() => {
+      setShowModal(true);
+    }, 1 * 60 * 1000); // 5 minutes in milliseconds
+
+    return () => clearTimeout(modalTimer);
+  }, []);
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const [timeLeft, setTimeLeft] = useState(1200); // Initial time in seconds
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -59,9 +77,20 @@ const OrderStatusScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Hi! {customerName}</Text>
+      <View style={{flexDirection:"row"}}>
+
+      {/* <Text style={styles.title }>Hi! </Text> */}
+      <Text style={styles.name }> {customerName}</Text>
+      </View>
+     
       <Text style={styles.title}>Your Order Is Ready In:</Text>
       <Text style={styles.timer}>{formatTime(timeLeft)}</Text>
+      <ReviewModal
+        isVisible={showModal}
+        closeModal={closeModal}
+        customerEmail={customerEmail}
+       
+      />
       {/* <CountDown
         size={60}
         until={10}
@@ -92,17 +121,27 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.primary1,
   },
   title: {
     fontSize: 40,
     marginBottom: 50,
     fontWeight: "bold",
+    color:Colors.white,
+    //textTransform:'uppercase',
+  },
+  name:
+  {
+    fontSize: 40,
+    marginBottom: 50,
+    fontWeight: "bold",
+    color:Colors.white,
+    textTransform:'uppercase',
   },
   timer: {
     fontSize: 70,
     fontWeight: "bold",
-    color: Colors.primary1,
+    color: Colors.white,
     marginBottom: 50,
   },
 });

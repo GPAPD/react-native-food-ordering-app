@@ -65,8 +65,8 @@ const styles = StyleSheet.create({
   header: {
     paddingVertical: 20,
     flexDirection:"column",
-    backgroundColor:Colors.white,
-    elevation:20
+    //backgroundColor:Colors.white,
+   // elevation:20
    
   },
   headerText1: {

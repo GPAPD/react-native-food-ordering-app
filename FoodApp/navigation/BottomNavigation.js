@@ -11,6 +11,7 @@ import { TabActions } from "@react-navigation/native";
 import OrderStatusScreen from "../Screens/OrderStatusScreen";
 import IntroScreen from "../Screens/IntroScreen";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import Colors from "../constants/colors";
 
 
 const Tab = createBottomTabNavigator();
@@ -26,7 +27,7 @@ const BottomNavigation = () => {
           elevation: 0,
         },
         showLabel: false,
-        activeTintColor: "#f07048",
+        tabBarActiveTintColor:Colors.primary1,
         tabBarShowLabel:false,
       }}
     >

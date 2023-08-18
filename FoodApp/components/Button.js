@@ -52,8 +52,8 @@ const IncrementButton = ({ title, onPress = () => {} }) => {
 const CancelButton = ({ title, onPress = () => {} }) => {
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={onPress}>
-      <View style={{ ...style.CancelButton, backgroundColor: Colors.primary3}}>
-        <Text style={{ ...style.title, color: Colors.white }}>{title}</Text>
+      <View style={{ ...style.CancelButton}}>
+        <Text style={{ ...style.title, color: Colors.primary1 }}>{title}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -90,7 +90,7 @@ const style = StyleSheet.create({
     height: 60,
     marginLeft: 120,
     marginRight: 120,
-    borderRadius: 30,
+    borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -109,28 +109,31 @@ const style = StyleSheet.create({
   primaryButton: {
     backgroundColor: Colors.primary1,
     width: "auto",
-    height: 60,
+    //height: 60,
     padding: 16,
-    borderRadius: 30,
+    borderRadius: 20,
     margin: 20,
     justifyContent: "center",
     alignItems: "center",
+    
   },
   title1: { color: Colors.white, fontWeight: "bold", fontSize: 30 },
   btnContainer: {
     height: 60,
     marginLeft: 120,
     marginRight: 120,
-    borderRadius: 30,
+    borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
   },
   CancelButton:{
-    backgroundColor: Colors.primary3,
+    
     width:150,
-    height: 60,
+    borderColor:Colors.primary1,
+    borderWidth:2,
+    //height: 60,
     padding: 15,
-    borderRadius: 30,
+    borderRadius: 20,
     margin: 20,
     justifyContent: "center",
     alignItems: "center",

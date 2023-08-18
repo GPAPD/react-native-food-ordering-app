@@ -91,11 +91,12 @@ const OrderConfirmationScreen = () => {
     };
 
     try {
+      navigation.navigate("OrderStatusScreen", { orderId, customerName,customerEmail });
       const orderRef = await firebase
         .firestore()
         .collection("Orders")
         .add(order);
-
+      
       // Insert into Realtime Database
       const realtimeDatabase = firebase.database();
       await realtimeDatabase.ref("Orders/" + orderRef.id).set(order);
@@ -104,7 +105,7 @@ const OrderConfirmationScreen = () => {
       dispatch(clearCart());
       setIsSubmitting(false);
       //alert("Order placed successfully");
-      navigation.navigate("OrderStatusScreen", { orderId, customerName });
+    
 
       // Alert.alert(
       //   "Confirm Order",
@@ -261,17 +262,17 @@ const OrderConfirmationScreen = () => {
           <View style={styles.confirmButtonContainer}>
             {isCustomerSaved && (
               <View style={styles.enterDetailsButton}>
-                <View style={{ width: 400 }}>
+                <View>
                   <PrimaryButton
                     title="Confirm Order"
-                    onPress={confirmModal}
+                    onPress={submitOrder}
                     disabled={isSubmitting}
                   />
                 </View>
                 <CancelButton title="Cancel" onPress={cancelOrder} />
               </View>
             )}
-            <CustomConfirmModal
+            {/* <CustomConfirmModal
               isVisible={isOrderConfirmModal}
               title="Confirm Order"
               ConfirmText="Confirm"
@@ -279,7 +280,7 @@ const OrderConfirmationScreen = () => {
               message="Are you sure you want to place this order?"
               onClose={() => setIsOrderConfirmModal(false)}
               onConfirm={submitOrder}
-            />
+            /> */}
           </View>
 
           {/* Modal for Customer Details */}
@@ -480,12 +481,13 @@ const styles = StyleSheet.create({
 
   // Adjust modalContainer style for centered display
   modalContainer: {
-    padding: 16,
+    padding: 20,
     backgroundColor: Colors.white,
     width: "80%",
     elevation: 10,
     justifyContent: "center",
     alignItems: "center",
+    
   },
 
   errorText: {

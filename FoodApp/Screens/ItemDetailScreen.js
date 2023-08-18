@@ -119,7 +119,11 @@ const ItemDetailScreen = ({ route }) => {
             renderItem={renderItem}
             sliderWidth={SLIDER_WIDTH}
             itemWidth={ITEM_WIDTH}
+            // loop
+            // autoplay
+           // autoplayInterval={3000} 
             onSnapToItem={(index) => setIndex(index)}
+
           />
           {/* Pagination */}
           <Pagination
