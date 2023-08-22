@@ -26,7 +26,7 @@ import Colors from "../constants/colors";
 import CustomConfirmModal from "../components/CustomConfirmModal";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import "firebase/compat/database"; 
+import "firebase/compat/database";
 
 const OrderConfirmationScreen = () => {
   const navigation = useNavigation();
@@ -42,6 +42,8 @@ const OrderConfirmationScreen = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCustomerSaved, setIsCustomerSaved] = useState(false);
   const [cartItems, setCartItems] = useState(checkoutData.items);
+
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   const dispatch = useDispatch();
 
@@ -80,6 +82,8 @@ const OrderConfirmationScreen = () => {
     setIsSubmitting(true);
 
     // order object with customer details
+    setCurrentTime(new Date());
+
     const order = {
       ...checkoutData,
       customer: {
@@ -88,24 +92,40 @@ const OrderConfirmationScreen = () => {
         email: customerEmail,
       },
       orderStatus: "Pending",
+      orderedAt: firebase.firestore.FieldValue.serverTimestamp(),
     };
 
+    const datetime = currentTime.toLocaleTimeString();
+
     try {
-      navigation.navigate("OrderStatusScreen", { orderId, customerName,customerEmail });
+      navigation.navigate("OrderStatusScreen", {
+        orderId,
+        customerName,
+        customerEmail,
+      });
       const orderRef = await firebase
         .firestore()
         .collection("Orders")
         .add(order);
-      
+
       // Insert into Realtime Database
       const realtimeDatabase = firebase.database();
-      await realtimeDatabase.ref("Orders/" + orderRef.id).set(order);
+      const orderLive = {
+        ...checkoutData,
+        customer: {
+          name: customerName,
+          phone: customerPhone,
+          email: customerEmail,
+        },
+        orderStatus: "Pending",
+        orderID: orderRef.id,
+      };
+      await realtimeDatabase.ref("Orders/" + datetime).set(orderLive);
 
       const orderId = orderRef.id;
       dispatch(clearCart());
       setIsSubmitting(false);
       //alert("Order placed successfully");
-    
 
       // Alert.alert(
       //   "Confirm Order",
@@ -487,7 +507,6 @@ const styles = StyleSheet.create({
     elevation: 10,
     justifyContent: "center",
     alignItems: "center",
-    
   },
 
   errorText: {
