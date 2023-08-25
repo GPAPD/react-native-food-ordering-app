@@ -12,6 +12,7 @@ import CartItemsContextProvider from "./store/context/cart-context";
 import IntroScreen from "./Screens/IntroScreen";
 import { Provider } from "react-redux";
 import store from "./store/store";
+import OrderStatusScreen from "./Screens/OrderStatusScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,9 +21,14 @@ export default function App() {
     <>
     <Provider store={store}>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator >
+        {/* <Stack.Screen
+            options={{ headerShown: false }}
+            name="OrderStatusScreen"
+            component={OrderStatusScreen}
+          /> */}
 
-        <Stack.Screen
+          <Stack.Screen
             options={{ headerShown: false }}
             name="Intro"
             component={IntroScreen}
@@ -33,11 +39,20 @@ export default function App() {
             name="BottomNavigation"
             component={BottomNavigation}
           />
+           
+
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="IntroS"
+            component={IntroScreen}
+          />
+          
           <Stack.Screen
             options={{ headerShown: false }}
             name="OrderConfirmationScreen"
             component={OrderConfirmationScreen}
           />
+         
 
           <Stack.Screen
             options={{ headerShown: false }}
@@ -60,6 +75,13 @@ export default function App() {
             name="category"
             component={Category}
           />
+          <Stack.Screen
+            options={{ headerShown: false }}
+            name="OrderStatusScreen"
+            component={OrderStatusScreen}
+          />
+          
+          
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

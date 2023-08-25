@@ -23,7 +23,7 @@ const IntroScreen = ({route }) => {
               marginTop: 20,
               fontSize: 28,
               textAlign: 'center',
-              color: "#ffff",
+              color:Colors.white,
             }}>
             Savor Bliss: Where Flavors Dance!
           </Text>

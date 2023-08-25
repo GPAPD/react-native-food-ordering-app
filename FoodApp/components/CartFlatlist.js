@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React from "react";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import { IncrementButton, DecrementButton } from "../components/Button";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import Colors from "../constants/colors";
 
 const CartFlatlist = ({ item, onIncrement, onDecrement, onDeleteItem }) => {
   return (
@@ -24,39 +24,59 @@ const CartFlatlist = ({ item, onIncrement, onDecrement, onDeleteItem }) => {
             marginLeft: 20,
             paddingVertical: 20,
             flex: 1,
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            
           }}
         >
-          <Text style={{ fontSize: 32, fontWeight: "bold", color: "black" }}>
-            {item.itemName}{" "}
-          </Text>
-          <View style={{ height: 54 }}>
-            <Text style={{ fontSize: 20, fontWeight: "bold", color: "grey" }}>
-              {"(" + item.description + ")"}{" "}
-            </Text>
-          </View>
+          <View  >
 
-          <Text style={{ fontSize: 30, fontWeight: "bold", color: "black" }}>
-            {"Rs. " + item.price}
-          </Text>
+          
+            <Text style={{ fontSize: 32, fontWeight: "bold", color: Colors.black}}>
+              {item.itemName}{" "}
+            </Text>
+          
+
+          {/* <View style={{ height: 54 }}>
+              <Text style={{ fontSize: 20, fontWeight: "bold", color: "grey" }}>
+                {"(" + item.description + ")"}{" "}
+              </Text>
+            </View> */}
+          
+            <Text style={{ fontSize: 30,  color: Colors.black }}>
+              {"Rs. " + item.price}
+            </Text>
+          
+          </View>
+          
         </View>
 
         <View
           style={{
-            marginRight: 40,
+            marginRight: 10,
             justifyContent: "center",
             alignItems: "center",
+            marginLeft: 50,
           }}
         >
-          <Text style={{ fontSize: 28, fontWeight: "bold", color: "black" }}>
-            {item.quantity}
-          </Text>
-
           <View
             style={{
               flexDirection: "row",
             }}
           >
             <DecrementButton onPress={onDecrement} />
+            <Text
+              style={{
+                fontSize: 28,
+                fontWeight: "bold",
+                color: Colors.black,
+                alignItems:'center',
+                paddingHorizontal: 5,
+              }}
+            >
+              {item.quantity}
+            </Text>
             <IncrementButton onPress={onIncrement} />
           </View>
         </View>
@@ -64,7 +84,7 @@ const CartFlatlist = ({ item, onIncrement, onDecrement, onDeleteItem }) => {
           onPress={onDeleteItem}
           style={{ marginTop: -35, marginBottom: 145, marginRight: -35 }}
         >
-          <Icon name="close-box" color={"#c3b9b9"} size={50} />
+          <Icon name="close-box" color={Colors.grey2} size={40} />
         </TouchableOpacity>
       </View>
     </View>
