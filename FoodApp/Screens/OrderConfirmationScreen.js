@@ -83,7 +83,7 @@ const OrderConfirmationScreen = () => {
 
     // order object with customer details
     setCurrentTime(new Date());
-
+  
     const order = {
       ...checkoutData,
       customer: {
@@ -96,18 +96,16 @@ const OrderConfirmationScreen = () => {
     };
 
     const datetime = currentTime.toLocaleTimeString();
+    
 
     try {
-      navigation.navigate("OrderStatusScreen", {
-        orderId,
-        customerName,
-        customerEmail,
-      });
+     
+     
       const orderRef = await firebase
         .firestore()
         .collection("Orders")
         .add(order);
-
+        const orderId = orderRef.id;
       // Insert into Realtime Database
       const realtimeDatabase = firebase.database();
       const orderLive = {
@@ -122,7 +120,11 @@ const OrderConfirmationScreen = () => {
       };
       await realtimeDatabase.ref("Orders/" + datetime).set(orderLive);
 
-      const orderId = orderRef.id;
+      navigation.navigate("OrderStatusScreen", {
+        orderId,
+        customerName,
+        customerEmail,
+      });
       dispatch(clearCart());
       setIsSubmitting(false);
       //alert("Order placed successfully");
