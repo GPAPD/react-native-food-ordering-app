@@ -9,6 +9,7 @@ import { useRoute } from "@react-navigation/native";
 import ReviewModal from "../components/ReviewModal";
 import { firebase } from "../firebase";
 import "firebase/firestore";
+import OrderReadyModal from "../components/OrderReadyModal";
 
 
 const OrderStatusScreen = () => {
@@ -25,12 +26,49 @@ const OrderStatusScreen = () => {
   //   navigation.dispatch(resetAction);
   // };
   const [showModal, setShowModal] = useState(false);
-
-
+  const [showOrderReadyModal, setShowOrderReadyModal] = useState(false);
+  const [orderStatus, setOrderStatus] = useState(""); 
+  
   useEffect(() => {
+    const orderRef = firebase.firestore().collection("Orders").doc(orderId);
+  
+    const unsubscribe = orderRef.onSnapshot((snapshot) => {
+      if (snapshot.exists) {
+        const data = snapshot.data();
+        if (data && data.orderStatus === "Done") {
+    
+          setShowOrderReadyModal(true);
+          setShowModal(false);
+          const modalTimer = setTimeout(() => {
+            setShowOrderReadyModal(false); 
+            handleCountdownFinish(); 
+          }, 12000); 
+  
+          return () => clearTimeout(modalTimer);
+          
+        
+          
+        }
+       
+        //setOrderStatus(data ? data.orderStatus : "");
+      } else {
+        //console.log("Document does not exist");
+      }
+    });
+  
+    return () => {
+      unsubscribe();
+    };
+  }, [orderId]);
+  
+  
+
+ 
+  
+  useEffect(() => { 
     const modalTimer = setTimeout(() => {
       setShowModal(true);
-    }, 1 * 60 * 1000); // 5 minutes in milliseconds
+    }, 1 * 60 * 1000); 
 
     return () => clearTimeout(modalTimer);
   }, []);
@@ -53,14 +91,14 @@ const OrderStatusScreen = () => {
       }
     }, 1000); // Update every 1 second
 
-    return () => clearInterval(interval); // Clean up the interval on unmount
+    return () => clearInterval(interval); 
   }, [timeLeft]);
 
   const handleCountdownFinish = () => {
     //navigation.navigate('Intro');
     const resetAction = CommonActions.reset({
       index: 0, // index of the screen to navigate to
-      routes: [{ name: "Intro" }], // name of the first screen
+      routes: [{ name: "Intro" }], 
     });
 
     navigation.dispatch(resetAction);
@@ -89,6 +127,12 @@ const OrderStatusScreen = () => {
         isVisible={showModal}
         closeModal={closeModal}
         customerEmail={customerEmail}
+       
+      />
+
+        <OrderReadyModal
+        isVisible={showOrderReadyModal}
+        customerName={customerName}
        
       />
       {/* <CountDown
